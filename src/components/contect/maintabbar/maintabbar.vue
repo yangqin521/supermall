@@ -1,19 +1,19 @@
  <template>
   <tab-bar>
       <item path="/home"> 
-        <img slot="item-img" src="../../../assets/img/tabbar/首页.png">
+        <img slot="item-img" src="../../../assets/img/tabbar/home.png">
         <div slot="item-text">首页</div>
       </item> 
       <item path="/kind">>
-        <img slot="item-img" src="../../../assets/img/tabbar/分类.png">
+        <img slot="item-img" src="../../../assets/img/tabbar/kind.png">
         <div slot="item-text">分类</div>
       </item>
       <item path="/shop"> 
-        <img slot="item-img" src="../../../assets/img/tabbar/购物车.png">
+        <img slot="item-img" src="../../../assets/img/tabbar/store.png">
         <div slot="item-text">购物车</div>
       </item> 
       <item path="/profile"> 
-        <img slot="item-img" src="../../../assets/img/tabbar/people.png">
+        <img slot="item-img" src="../../../assets/img/tabbar/profile.png">
         <div slot="item-text">我的</div>
       </item> 
       

@@ -20,7 +20,7 @@ export default {
   line-height:44px;
   height:44px;
   width:100%;
-  background-color:#ff8189;
+  background-color:rgb(165, 194, 228);
   color:white;
   z-index:9999;
    opacity:10;

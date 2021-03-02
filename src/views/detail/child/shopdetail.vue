@@ -1,20 +1,24 @@
 <template>
-  <div class="shop">
-    <div>
+  <div id="shopdetail">
     <div class="shopname">
-      <img src="../../../assets/img/home/commends.jpg">
-      <span>{{shop.shop}}</span>
+      <span><img src="../../../assets/img/home/commends.jpg"></span>
+      <span class="shopn">{{shop.shop}}</span>
     </div>
     <span class="sell">
-      <span class="sell1"><span style="padding-right:13%"><span class="sell2"></span>{{shop.totalsell}}万</span>  {{shop.totalnum}}</span>
-      <div><span style="padding-right:8%">总销量</span>全部宝贝</div>
+      <span class="sell1">
+        <div>{{shop.totalsell}}万</div>
+        <div>总销量</div>
+      </span>
+      <span class="sell1">
+        <div>{{shop.totalnum}}</div>
+        <div>全部宝贝</div>
+      </span>
+      <span class='des'>
+        <div>描述相符<span :class="{good:shop.description>4.80,notgood:shop.description<4.80 || shop.description==4.80}">{{shop.description | numFilter}}</span></div>
+        <div>价格合理<span :class="{good:shop.commend>4.80 || shop.commend==4.80,notgood:shop.commend<4.80}">{{shop.commend | numFilter}}</span></div>
+        <div>质量满意<span :class="{good:shop.quality>4.80 || shop.quality==4.80,notgood:shop.quality<4.80}">{{shop.quality | numFilter}}</span></div>
+      </span>
     </span>
-    <div class='des'>
-      <div>描述相符<span :class="{good:shop.description>4.80,notgood:shop.description<=4.80}">{{shop.description}}</span></div>
-      <div>价格合理<span :class="{good:shop.commend>4.90,notgood:shop.commend<=4.80}">{{shop.commend}}</span></div>
-      <div>质量满意<span :class="{good:shop.quality>4.80,notgood:shop.quality<=4.80}">{{shop.quality}}</span></div>
-    </div>
-    </div>
     <div v-for="(item,index) in shopimgs" :key="index" class="imgs">
       <img :src="item" @load="imgload">
     </div>
@@ -42,6 +46,15 @@ export default {
        default(){return []}
      }
   },
+  filters: {
+    numFilter(value) {
+  // 截取当前数据到小数点后两位
+    let transformVal = Number(value).toFixed(3)
+    let realVal = transformVal.substring(0, transformVal.length - 1)
+    // num.toFixed(2)获取的是字符串
+    return Number(realVal)
+    }
+    },
   methods:{
     imgload()
     {
@@ -60,56 +73,55 @@ export default {
 }
 </script>
 <style scoped>
-.shop{
+#shopdetail{
+  border-top:1px solid rgb(160, 157, 157);
   height:inherit;
   position: relative;
   overflow: hidden;
   zoom:1;
 }
+.shopn{
+  padding-top:16%;
+}
 .shopname img{
-  width:40px;
+  width:90%;
   border-radius: 100%;
-  margin-bottom: 20px;
 }
 .shopname span{
   color:rgb(101, 112, 112);
-  font-size: 14px;
-  position: relative;
-  top:-25px;
-  left:5%;
+  flex:1;
 }
 .shopname{
-  margin-top:8%;
+  margin-top:5%;
+  display: flex;
+  width:35%;
 }
 .sell
 {
-  font-size:12px;
-  margin-top:10%;
+  margin-top:5%;
+  display: flex;
+  margin-bottom: 10%;
 }
-.sell1{
+.sell span{
+  flex:1;
   font-size:14px;
 }
-.sell2{
-  margin-left:2%;
-}
-.des{
-  position: relative;
-  left:200px;
-  top:-35px;
-  font-size:13px;
+.sell1{
+  text-align: center;
 }
 .good{
   color:rgb(207, 53, 14);
 }
 .des div span{
-  margin-left:4%;
+  margin-left:8%;
 }
 .notgood{
   color:rgb(180, 238, 180);
 }
 .imgs{
-  position: relative;
-  height:350px;
-  width:320px;
+  height:500px;
+  padding-left:3%;
+  padding-right: 3%;
+  margin-bottom: 5%;
 }
 </style>

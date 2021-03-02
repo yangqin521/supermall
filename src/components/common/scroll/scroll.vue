@@ -42,6 +42,12 @@ export default {
                   this.scroll.on("pullingUp",()=>{
                      this.$emit('pullingUp')});
     },
+     methods:{
+      gety()
+                {
+                  return this.scroll.y ? this.scroll.y : 0
+                }
+    }
 }
 </script>
 <style scoped>

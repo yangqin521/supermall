@@ -1,0 +1,355 @@
+//node.js文件   为后台文件  为vue项目提供数据
+
+
+
+const express=require("express");
+const app=express();
+var ppage=1,npage=1,spage=1,ppage1,npage1,spage1,id,shop,name,type,num,store
+const urlLib = require('url');
+const mysql=require("mysql");
+const { send } = require("process");
+const { groupCollapsed } = require("console");
+var data1,data2,data3,data4,data5,data6,kind,assess,recommend;
+var db=mysql.createConnection({host:"localhost",port:3306,user:"root",password:"628628",database:"supermall"});
+
+//recommends
+app.all("/home/multidata",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+res.send(data1);
+res.end();
+});
+db.query("SELECT address FROM `commends`;",(err,data)=>
+//(干啥，回调)
+{
+  data1=data;
+  if(err)
+  {
+    console.log("error",err);
+  }
+  else{
+ //console.log(JSON.stringify(data1));
+  }
+  module.exports=data1;
+});
+
+//pop page
+app.all("/home/popdata",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+    var obj = urlLib.parse(req.url, true)
+    var url = obj.pathname;
+    var GET = obj.query;
+    ppage=obj.query.page;
+    if(ppage!=null)
+    {
+      ppage1=ppage;
+    }
+    else{
+      ppage=ppage1;
+    }
+db.query("SELECT id,address,price,name,collection FROM `goods` where type='pop'limit ?,4",[(ppage-1)*4],(err,data)=>
+    {
+      data2=data;
+    //   if(err)
+    //   {
+    //     console.log("error",err);
+    //   }
+    //   else{
+     //console.log(JSON.stringify(data2));
+    //   }
+      module.exports=data2;
+    });
+    res.send(data2);
+    //res.write(page);
+    res.end();
+});
+
+//news page
+app.all("/home/newsdata",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+    var obj = urlLib.parse(req.url, true)
+    var url = obj.pathname;
+    var GET = obj.query;
+    npage=obj.query.page;
+    if(npage!=null)
+    {
+      npage1=npage;
+    }
+    else{
+      npage=npage1;
+    }
+    db.query("SELECT id,address,price,name,collection FROM `goods` where type='news'limit ?,4",[(npage-1)*4],(err,data)=>
+{
+  data3=data;
+  module.exports=data3;
+});
+    res.send(data3);
+    res.end();
+});
+
+//sell page
+app.all("/home/selldata",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+    var obj = urlLib.parse(req.url, true)
+    var url = obj.pathname;
+    var GET = obj.query;
+    spage=obj.query.page;
+    if(spage!=null)
+    {
+      spage1=spage;
+    }
+    else{
+      spage=spage1;
+    }
+    db.query("SELECT id,address,price,name,collection FROM `goods` where type='sell'limit ?,4",[(spage-1)*4],(err,data)=>
+{
+  data4=data;
+  module.exports=data4;
+});
+    res.send(data4);
+    //res.write(page);
+    res.end();
+});
+
+//detail data
+app.all("/detail",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+    var obj = urlLib.parse(req.url, true)
+    var GET = obj.query;
+    id=GET.id;
+    db.query("SELECT * FROM goods c,detail join goods on goods.id = detail.id where goods.id=?",[id],(err,data)=>
+{
+  if(err){
+		console.log(err);
+	}else{
+  data5=data[0];
+  module.exports=data5;
+  }
+});
+    res.send(data5);
+   res.end();
+});
+
+//shop detail
+app.all("/shopdetail",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+    var obj = urlLib.parse(req.url, true)
+    var GET = obj.query;
+    shop=GET.shop;
+    db.query("SELECT * FROM detail c,shop join detail on detail.shop = shop.shop where shop.shop=?",[shop],(err,data)=>
+{
+  if(err){
+		console.log(err);
+	}else{
+  data6=data[0];
+  module.exports=data6;
+  }
+});
+    res.send(data6);
+   res.end();
+});
+
+//research
+app.all("/datakind",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+    var obj = urlLib.parse(req.url, true)
+    name=obj.query.key;
+    var k="%" +name +"%";
+    db.query("SELECT * FROM goods where name like ?",[k],(err,data)=>
+{
+  if(err){
+		console.log(err);
+	}else{
+   kind=data;
+  module.exports=kind;
+  }
+});
+    res.send(kind);
+   res.end();
+});
+
+//评论
+app.all("/detail/assess",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+    db.query("SELECT * FROM assess where id=?",[id],(err,data)=>
+{
+  if(err){
+		console.log(err);
+	}else{
+   assess=data;
+  module.exports=assess;
+  }
+});
+    res.send(assess);
+   res.end();
+});
+
+
+//推荐商品
+app.all("/detail/recommend",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+    var obj = urlLib.parse(req.url, true)
+    type=obj.query.type;
+    db.query("SELECT * FROM goods where type= ? limit 0,4",[type],(err,data)=>
+{
+  if(err){
+		console.log(err);
+	}else{
+   recommend=data;
+  module.exports=recommend;
+  }
+});
+    res.send(recommend);
+   res.end();
+});
+
+//购物车添加
+app.all("/detail/addto",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+    var obj = urlLib.parse(req.url, true)
+    var product =JSON.parse(obj.query.produce)
+    var iid= product.id
+    db.query("select num from store where id=?",[iid],(err,data)=>
+{
+  if(data.length==0){
+    db.query("INSERT INTO STORE(id,shopname,shop,image,price,num,checked) VALUES(?,?,?,?,?,?,'false')",[product.id,product.title,product.shop,product.image,product.price,product.num],(err,data)=>
+    {
+      if(err){
+        console.log(err);
+      }
+    });
+	}
+  else{
+    num=data[0].num
+    db.query("update store set num =? where id =?",[num+1,iid],(err,data)=>{
+      if(err){
+        console.log(err);
+      }
+    })
+  }
+});
+   res.end();
+});
+
+//readstore
+app.all("/store",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+    db.query("select * from store",(err,data)=>
+{
+  store=data;
+  module.exports=store;
+}
+);
+  res.send(store);
+ res.end();
+});
+
+
+
+//用户登录
+app.all("/shop/commit",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+  var obj = urlLib.parse(req.url, true)
+  var username=obj.query.username
+  var password=obj.query.password
+  db.query("select * from profile where username =?",[username],(err,data)=>{
+    if(data.length==0){
+      res.send("no");
+      res.end();
+    }
+    else{
+      if(data[0].password==password)
+      {
+        res.send("success")
+        res.end();
+      }
+      else
+      {
+        res.send("failed")
+        res.end()
+      }
+    }
+  })
+});
+
+//用户注册
+app.all("/shop/register",(req,res)=>{
+  res.header("Access-Control-Allow-Origin","*");
+  //允许的header类型
+  res.header("Access-Control-Allow-Headers","content-type");
+  //跨域允许的请求方式 
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+  var obj = urlLib.parse(req.url, true)
+  var username=obj.query.username
+  var password=obj.query.password
+  db.query("select * from profile where username=?",[username],(err,data)=>{
+  {
+    if(data.length!=0)
+    {
+      res.send("failed");
+      res.end();
+    }
+    else
+    {
+      db.query("insert into profile(username,password) values(?,?)",[username,password],(err,data)=>{})
+      res.send("success")
+      res.end();
+    }
+  }
+})
+});
+
+
+
+
+app.listen(8000,()=>{
+  console.log("success");
+}
+);

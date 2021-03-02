@@ -1,19 +1,19 @@
 <template>
-  <div class="goods">
-    <div class="name">【<span>{{goodshop.shop}}</span>】{{goodshop.name}}</div>
-    <div class="price">
+  <div id="gooddetail">
+    <div class="namex">【<span>{{goodshop.shop}}</span>】{{goodshop.name}}</div>
+    <div class="pricex">
       <span class="now">￥{{goodshop.price}}</span>
       <span class="old">{{goodshop.price+20}}</span>
     </div>
-    <div class="shop">
+    <div class="shopx">
       <span style="padding-right:16%">销量 {{goodshop.sellnumber}}</span>
       <span style="padding-right:16%">收藏 {{goodshop.collection}} 人</span>
       <span>72小时发货</span>
     </div>
     <div class="shop2">
-      <span style="padding-right:8%"><img src="../../../assets/img/detail/active.png">退货补运费</span>
-      <span style="padding-right:8%"><img src="../../../assets/img/detail/active.png">全国包邮</span>
-      <img src="../../../assets/img/detail/active.png">七天无理由退换货
+      <span><img src="../../../assets/img/detail/active.png">退货补运费</span>
+      <span><img src="../../../assets/img/detail/active.png">全国包邮</span>
+      <span><img src="../../../assets/img/detail/active.png">七天无理由退换货</span>
     </div>
   </div>
 </template>
@@ -28,17 +28,21 @@ export default {
        default(){return {}}
     }
   },
-  cereted()
-  {
-    console.log(this.goodshop)
-  },
 }
 </script>
 <style scoped>
-.name
+.namex
 {
   height:80px;
   width:97%;
+  overflow: hidden;
+  margin-bottom:3%;
+}
+.pricex{
+  margin-bottom:3%;
+} 
+.shopx{
+  margin-bottom:3%;
 }
 .now
 {
@@ -51,25 +55,30 @@ export default {
   position: relative;
   left:12px;
 }
-.goods{
+#gooddetail{
   font-size: 14px;
   position: relative;
   left:5px;
   right:5px;
   text-align: justify;
-  border-bottom:cornsilk 2px solid;
-  padding-bottom: 35px;
+  margin-bottom: 6%;
 }
-.shop{
+.shopx{
   font-size: 12px;
-  color:rgb(191, 199, 199);
+  display: flex;
+  color:rgb(175, 179, 179);
 }
 .shop2 img{
   width:13px;
 }
-.shop2 {
-  position: relative;
-  top:15px;
-  font-size:13px;
+.shop2{
+  display: flex;
+  padding-right:3%;
+}
+.shopx span{
+  flex:1;
+}
+.shop2 span {
+ flex:1;
 }
 </style>

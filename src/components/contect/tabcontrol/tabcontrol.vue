@@ -46,6 +46,7 @@ export default {
   height:40px;
   line-height: 40px;
   background-color:white;
+  color:rgb(167, 205, 248);
   z-index:90;
 }
 .itemcon{
@@ -53,11 +54,11 @@ export default {
 
 }
 .active{
-  color:#ff8189;
+  color:rgb(25, 71, 223);
 }
 .active span
 {
 
-  border-bottom:1px solid #ff8189 ;
+  border-bottom:1px solid rgb(25, 71, 223) ;
 }
 </style>

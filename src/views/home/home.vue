@@ -1,6 +1,6 @@
  <template>
   <div id="home">
-    <navbar class="home-nav"><div slot="center">购物车</div></navbar>
+    <navbar class="home-nav"><div slot="center">购物街</div></navbar>
     <tabcontrol
       v-show="istabfix"
       ref="tab"
@@ -25,7 +25,7 @@
       class="tab"></tabcontrol>
       <goodslist :goods="clothes[currentindex].list"></goodslist>
     </scroll>
-    <backtop @click.native="backtop" v-show="num"></backtop>
+    <backtop @click.native="backtop" v-show="num" class="backtop"></backtop>
  </div>
 </template>
 
@@ -113,7 +113,8 @@ export default {
    {
      if(position.y<0)
      {
-       this.num=true;
+       if(position.y<-430)
+       {this.num=true;}
        this.istabfix=(-position.y)>this.offsettop
      }
       if(position.y>=0)
@@ -154,6 +155,7 @@ debounce(func,delay)//防抖函数  用于解决refresh重复执行问题
    tabclick(index)
    {
      this.currentindex=index;
+     this.$refs.tab.cuindex=index;
    },
    backtop()
    {
@@ -180,6 +182,7 @@ debounce(func,delay)//防抖函数  用于解决refresh重复执行问题
     {
       return this.clothes[this.currentindex].list
     },
+    },
     activated()
     {
       this.$refs.scroll.scroll.scrollTo(0,this.savey,0)
@@ -187,8 +190,7 @@ debounce(func,delay)//防抖函数  用于解决refresh重复执行问题
     },
     deactivated()
     {
-      this.savey=-this.$refs.scroll.scroll.y
-    }
+      this.savey=this.$refs.scroll.gety()
     }
 }
 </script>
@@ -220,11 +222,11 @@ width:100%;
 #home{
 padding-top: 44px;
 height:100vh;
+position: relative;
 }
 
 .wrapper
 {
-  height:480px;
-  overflow: hidden;
+  height:95%;
 }
 </style>

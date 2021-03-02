@@ -27,3 +27,41 @@ export function getshopdetail(shop)
     url:"/shopdetail"
   })
 }
+
+export function getassess()
+{
+  return request({
+    url:"/detail/assess"
+  })
+}
+
+export function getrecommend(type)
+{
+  return request({
+   params:{
+     type
+   },
+    url:"/detail/recommend"
+  })
+}
+
+export function addto(produce)
+{
+  return request({
+   params:{
+     produce
+     },
+    url:"/detail/addto"
+  })
+}
+
+
+
+
+
+
+
+
+
+
+
